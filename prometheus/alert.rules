@@ -1,0 +1,7 @@
+ALERT cpu_threshold
+  IF 100 - cpu_usage_idle > 15
+  FOR 30s
+  LABELS { severity = "high" }
+  ANNOTATIONS {
+    summary = "Server {{ $labels.host }} CPU usage is high"
+    }

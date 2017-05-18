@@ -1,0 +1,7 @@
+#
+# Count how many log lines contains 'start-container' 
+#
+counter mtail_start_container
+/start-container/ {
+  mtail_start_container++
+}

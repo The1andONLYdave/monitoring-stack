@@ -1,0 +1,67 @@
+version: '2'
+services:
+  # synch docker time https://github.com/docker/for-mac/issues/1260#issuecomment-279050735
+  time:
+    image: alpine
+    privileged: true
+    command: hwclock -s
+  prometheus:
+    image: prom/prometheus:v1.6.2
+    ports:
+     - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/alert.rules:/rules/alert.rules
+    command: [ "-config.file=/etc/prometheus/prometheus.yml",
+             "-storage.local.path=/prometheus",
+             "-web.console.libraries=/usr/share/prometheus/console_libraries",
+             "-web.console.templates=/usr/share/prometheus/consoles",
+             "-web.external-url=http://127.0.0.1:9090"]
+             # Log level debug not working https://github.com/prometheus/prometheus/issues/2330
+  grafana:
+    build: 
+      context: ./grafana
+    image: grafana:local
+    ports:
+     - "3000:3000"
+    environment:
+     - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+  telegraf:
+    build: 
+      context: ./telegraf
+    image: telegraf:local
+    ports:
+     - "9126:9126"
+    volumes:
+     # Mount host paths in docker so we have some data to parse
+     - /var/run/docker.sock:/var/run/docker.sock:ro
+     - /sys:/rootfs/sys:ro
+     - /proc:/rootfs/proc:ro
+     - /etc:/rootfs/etc:ro
+     - /var/log/:/rootfs/var/log
+  mtail:
+    build: 
+      context: ./mtail
+    image: mtail:local
+    ports:
+     - "3903:3903"
+    volumes:
+     # Mount host paths in docker so we have some data to parse
+     - /var/log/:/rootfs/var/log
+
+
+  #
+  # Simple http server with prometheus javaagent to export JMX metrics
+  #
+  #     --- SBT IS SUPER SLOW TO DOWNLOAD ---
+  #
+  #             --- BE PATIENT ---
+  #
+  #
+  # httpserver:
+  #   build: 
+  #     context: ./scala-httpserver
+  #   image: scala-httpserver:local
+  #   ports:
+  #    - "8080:8080" # Http
+  #    - "9999:9999" # Prometheus metrics

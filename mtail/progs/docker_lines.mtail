@@ -1,0 +1,7 @@
+#
+# Count file lines - https://github.com/google/mtail/blob/master/examples/linecount.mtail 
+#
+counter mtail_line_count
+/$/ {
+  mtail_line_count++
+}
