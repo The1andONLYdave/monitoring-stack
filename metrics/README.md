@@ -32,6 +32,7 @@ Run docker images `docker-compose up`
 Check if services are running:
 - Grafana (login with: admin/admin) <http://127.0.0.1:3000> 
 - Prometheus <http://127.0.0.1:9090>
+- Alertmanager <http://127.0.0.1:9093>
 - Telegraf <http://127.0.0.1:9126>
 - Mtail <http://127.0.0.1:3903>
 
@@ -64,6 +65,8 @@ Generate cpu cycle with `docker run -ti alpine sh -c "while true; do true; done"
 Wait one minutes, when the alert fire a vertical red dotted lines will appear in grafana telegraf cpu dashboard <http://127.0.0.1:3000/dashboard/file/telegraf.json>
 
 ### Alertmanager
+
+**This section needs further works - Notification rules may not work!**
 
 Documentation: <https://prometheus.io/docs/alerting/alertmanager/>
 

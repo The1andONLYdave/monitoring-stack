@@ -24,7 +24,7 @@ route:
   # The labels by which incoming alerts are grouped together. For example,
   # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
   # be batched into a single group.
-  group_by: ['severity', 'app', 'job']
+  group_by: ['severity', 'job']
 
   # When a new group of alerts is created by an incoming alert, wait at
   # least 'group_wait' to send the initial notification.
@@ -42,7 +42,7 @@ route:
   repeat_interval: 15m
 
   # A default receiver
-  receiver: team-infrastructure
+  receiver: team-level-1
 
   # The child route trees.
   routes:
@@ -50,7 +50,7 @@ route:
   # catch alerts that are related to a list of services.
   - match_re:
       job: ^(/telegraf/.*)$
-    receiver: team-team-level-1
+    receiver: team-level-1
   - match_re:
       job: ^(/mtail/.*)$
     receiver: team-level-2

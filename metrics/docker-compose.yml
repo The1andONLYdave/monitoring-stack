@@ -30,16 +30,18 @@ services:
              "-storage.local.path=/prometheus",
              "-web.console.libraries=/usr/share/prometheus/console_libraries",
              "-web.console.templates=/usr/share/prometheus/consoles",
-             "-web.external-url=http://127.0.0.1:9090"]
+             "-web.external-url=http://127.0.0.1:9090",
+             "-alertmanager.url=http://alertmanager:9093"]
              # Log level debug not working https://github.com/prometheus/prometheus/issues/2330
   #
   # Alert manager - Receives fired alerts from prometheus and sends out notifications
   #
-  # alertmanager:
-  #   image: prom/alertmanager:v0.6.2
-  #   ports:
-  #    - ""
-  #   volumes: /alertmanager/config.yml:/etc/alertmanager/config.yml
+  alertmanager:
+    image: prom/alertmanager:v0.6.2
+    ports:
+     - "9093:9093"
+    volumes: 
+     - ./alertmanager/config.yml:/etc/alertmanager/config.yml
   #
   # Telegraf - Epose metrics from host in prometheus protocol
   #
