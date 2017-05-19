@@ -1,6 +1,6 @@
 # Monitoring microservice
 
-An opinionated monitoring stack for physical hosts, clusters and microservices 
+An opinionated monitoring stack for physical hosts, clusters and microservices applications
 
 # Background
 
