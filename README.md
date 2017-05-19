@@ -2,6 +2,10 @@
 
 An opinionated monitoring stack for physical hosts, clusters and microservices applications
 
+This repository contains a working `docker-compose` file for
+- [The metrics stack](./metrics)
+- [The log stack](./logs)
+
 ## Background
 
 Test and learn how to monitor distributed microservices architecture
@@ -31,7 +35,7 @@ In this stack metrics are first class data to focus on and logs are used to deep
 - [Telegraf](https://docs.influxdata.com/telegraf) to expose physical host metrics in http prometheus format
 - [Mtail](https://github.com/google/mtail) to parse log files and expose prometheus metrics
 
-**[See detailed how to in metrics folder](./metrics)**
+**[Try it with docker-compose](./metrics)**
 
 ## Logs stack
 
@@ -40,12 +44,12 @@ In this stack metrics are first class data to focus on and logs are used to deep
 - [Rsyslog](http://www.rsyslog.com/) to send data to graylog
 - [Graylog](http://www.graylog.org) to store, query, visualize logs
 
-**[See detailed how to in logs folder](./logs)**
+**[Try it with docker-compose](./logs)**
 
 
 ## Further reading
 
 - [1] <https://grafana.com/blog/2016/01/05/logs-and-metrics-and-graphs-oh-my>
-- [2] <1.	http://sail.cs.queensu.ca/Downloads/EMSE2017_ExaminingTheStabilityOfLoggingStatements.pdf
+- [2] <http://sail.cs.queensu.ca/Downloads/EMSE2017_ExaminingTheStabilityOfLoggingStatements.pdf>
 >
 
