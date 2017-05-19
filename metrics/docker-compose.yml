@@ -35,11 +35,11 @@ services:
   #
   # Alert manager - Receives fired alerts from prometheus and sends out notifications
   #
-  alertmanager:
-    image: prom/alertmanager:v0.6.2
-    ports:
-     - ""
-    volumes: /alertmanager/config.yml:/etc/alertmanager/config.yml
+  # alertmanager:
+  #   image: prom/alertmanager:v0.6.2
+  #   ports:
+  #    - ""
+  #   volumes: /alertmanager/config.yml:/etc/alertmanager/config.yml
   #
   # Telegraf - Epose metrics from host in prometheus protocol
   #
