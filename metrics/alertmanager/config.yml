@@ -1,0 +1,66 @@
+#
+#     Alertmanager 
+#
+#     Documentation: https://prometheus.io/docs/alerting/alertmanager/
+#
+
+global:
+  # The smarthost and SMTP sender used for mail notifications.
+  #
+  #  --- UPDATE THIS SETTING TO AN SMTP SERVER ---
+  #
+  smtp_smarthost: 'hostname-UPDATE-ME:25'
+  smtp_from: 'alertmanager@rnd.unicredit.eu'
+  smtp_require_tls: false
+
+#
+
+# The directory from which notification templates are read.
+#templates:
+#- '/etc/alertmanager/template/*.tmpl'
+
+# The root route on which each incoming alert enters.
+route:
+  # The labels by which incoming alerts are grouped together. For example,
+  # multiple alerts coming in for cluster=A and alertname=LatencyHigh would
+  # be batched into a single group.
+  group_by: ['severity', 'app', 'job']
+
+  # When a new group of alerts is created by an incoming alert, wait at
+  # least 'group_wait' to send the initial notification.
+  # This way ensures that you get multiple alerts for the same group that start
+  # firing shortly after another are batched together on the first
+  # notification.
+  group_wait: 30s
+
+  # When the first notification was sent, wait 'group_interval' to send a batch
+  # of new alerts that started firing for that group.
+  group_interval: 5m
+
+  # If an alert has successfully been sent, wait 'repeat_interval' to
+  # resend them.
+  repeat_interval: 15m
+
+  # A default receiver
+  receiver: team-infrastructure
+
+  # The child route trees.
+  routes:
+  # This routes performs a regular expression match on alert labels to
+  # catch alerts that are related to a list of services.
+  - match_re:
+      job: ^(/telegraf/.*)$
+    receiver: team-team-level-1
+  - match_re:
+      job: ^(/mtail/.*)$
+    receiver: team-level-2
+
+receivers:
+- name: 'team-level-1'
+  email_configs:
+  - to: '-----CHANGE_ME----@gmail.com'
+    require_tls: false
+- name: 'team-level-2'
+  email_configs:
+  - to: '-----CHANGE_ME----@gmail.com'
+    require_tls: false

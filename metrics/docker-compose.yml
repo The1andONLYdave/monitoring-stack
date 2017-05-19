@@ -5,6 +5,20 @@ services:
     image: alpine
     privileged: true
     command: hwclock -s
+  #
+  #  Grafana - Dashboard UI
+  #  
+  grafana:
+    build: 
+      context: ./grafana
+    image: grafana:local
+    ports:
+     - "3000:3000"
+    environment:
+     - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource    
+  #
+  # Prometheus - Metric storage, query and alerts
+  #
   prometheus:
     image: prom/prometheus:v1.6.2
     ports:
@@ -18,14 +32,17 @@ services:
              "-web.console.templates=/usr/share/prometheus/consoles",
              "-web.external-url=http://127.0.0.1:9090"]
              # Log level debug not working https://github.com/prometheus/prometheus/issues/2330
-  grafana:
-    build: 
-      context: ./grafana
-    image: grafana:local
+  #
+  # Alert manager - Receives fired alerts from prometheus and sends out notifications
+  #
+  alertmanager:
+    image: prom/alertmanager:v0.6.2
     ports:
-     - "3000:3000"
-    environment:
-     - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource
+     - ""
+    volumes: /alertmanager/config.yml:/etc/alertmanager/config.yml
+  #
+  # Telegraf - Epose metrics from host in prometheus protocol
+  #
   telegraf:
     build: 
       context: ./telegraf
@@ -39,6 +56,9 @@ services:
      - /proc:/rootfs/proc:ro
      - /etc:/rootfs/etc:ro
      - /var/log/:/rootfs/var/log
+  #
+  # Mtail - Parse log files and create metrics in prometheus protocol
+  #   
   mtail:
     build: 
       context: ./mtail
