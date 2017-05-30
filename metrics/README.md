@@ -40,6 +40,25 @@ You may need to replace host 127.0.0.1 with the host/ip where docker engine is r
 
 Clean up `docker-compose rm`
 
+## Http proxy
+
+To run docker-compose with http proxy 
+
+- configure docker-engine to support http proxy, this step is specific for the OS (linux, centos, ubuntu, docker for mac, ...) search the relative docs
+- Edit `docker-compose` and enable proxy variables (see inline comments) 
+- set this env variables in your terminal before run docker-compose 
+```
+HTTP_PROXY=...
+http_proxy=...
+HTTPS_PROXY=..
+https_proxy=...
+NO_PROXY="127.0.0.1,localhost,/var/run/docker.sock"
+no_proxy="127.0.0.1,localhost,/var/run/docker.sock"
+```
+
+Please note that `NO_PROXY` variable could be set to a different value in your environment.
+
+
 ## Usage
 
 In order to learn how the stack works look at configuration file in application folders 

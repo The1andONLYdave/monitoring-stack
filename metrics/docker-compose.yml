@@ -11,11 +11,22 @@ services:
   grafana:
     build: 
       context: ./grafana
+      # Uncomment next 5 lines to enable proxy
+      #args:
+      # - HTTP_PROXY
+      # - HTTPS_PROXY      
+      # - http_proxy
+      # - https_proxy 
     image: grafana:local
     ports:
      - "3000:3000"
     environment:
      - GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource    
+    # Uncomment next 4 lines to enable proxy 
+    #  - HTTP_PROXY
+    #  - HTTPS_PROXY      
+    #  - http_proxy
+    #  - https_proxy      
   #
   # Prometheus - Metric storage, query and alerts
   #
@@ -64,6 +75,12 @@ services:
   mtail:
     build: 
       context: ./mtail
+      # Uncomment next 5 lines to enable proxy
+      #args:
+      # - HTTP_PROXY
+      # - HTTPS_PROXY      
+      # - http_proxy
+      # - https_proxy 
     image: mtail:local
     ports:
      - "3903:3903"
