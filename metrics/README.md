@@ -52,11 +52,11 @@ HTTP_PROXY=...
 http_proxy=...
 HTTPS_PROXY=..
 https_proxy=...
-NO_PROXY="127.0.0.1,localhost,/var/run/docker.sock"
-no_proxy="127.0.0.1,localhost,/var/run/docker.sock"
+NO_PROXY='127.0.0.1, localhost, /var/run/docker.sock'
+no_proxy='127.0.0.1, localhost, /var/run/docker.sock'
 ```
 
-Please note that `NO_PROXY` variable could be set to a different value in your environment.
+Please note that `NO_PROXY` variable must match running environment. Docker client call docker engine with http requests, add hostname or ip of docker engine host to no_proxy env var.
 
 
 ## Usage
